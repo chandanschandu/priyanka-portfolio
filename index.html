@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Priyanka K P – Digital Marketing & Strategy</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script defer>
+        document.addEventListener("DOMContentLoaded", function () {
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.from(".hero-content h1", { duration: 1.5, y: -50, opacity: 0, ease: "power3.out" });
+            gsap.from(".hero-content p", { duration: 1.5, y: 30, opacity: 0, delay: 0.3, ease: "power3.out" });
+
+            // Adjust general section animation to account for new layout
+            gsap.utils.toArray(".content-section").forEach(section => {
+                gsap.from(section, {
+                    scrollTrigger: { trigger: section, start: "top 85%" },
+                    opacity: 0, y: 40, duration: 0.8, ease: "power2.out"
+                });
+            });
+
+
+            // Specific animations for a more staggered effect if desired later
+            gsap.utils.toArray(".expertise-grid-item").forEach(item => {
+                gsap.from(item, {
+                    scrollTrigger: { trigger: item, start: "top 90%" },
+                    y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.7)"
+                });
+            });
+
+            gsap.utils.toArray(".skill-item").forEach(item => {
+                gsap.from(item, {
+                    scrollTrigger: { trigger: item, start: "top 90%" },
+                    y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.7)"
+                });
+            });
+
+            gsap.utils.toArray(".highlight-item").forEach(item => {
+                gsap.from(item, {
+                    scrollTrigger: { trigger: item, start: "top 90%" },
+                    x: -20, opacity: 0, duration: 0.5, stagger: 0.1, ease: "power1.out"
+                });
+            });
+
+            // Specific animation for individual cards within experience section
+            gsap.utils.toArray(".experience-section .card").forEach(item => {
+                gsap.from(item, {
+                    scrollTrigger: { trigger: item, start: "top 85%" },
+                    y: 30, opacity: 0, duration: 0.7, ease: "power2.out"
+                });
+            });
+
+        });
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .content-transition-exit-active {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        .content-transition-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s ease-in, transform 0.5s ease-in;
+        }
+
+        .scrollbar-thin {
+            scrollbar-width: thin;
+            scrollbar-color: #4a5568 #2d3748;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: #2d3748;
+            border-radius: 10px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background-color: #4a5568;
+            border-radius: 10px;
+            border: 2px solid #2d3748;
+        }
+
+        .gallery-controls {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 1rem;
+        }
+
+        .gallery-controls button {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border-radius: 9999px;
+            padding: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-controls button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+
+</head>
+
+<body>
+    <header class="top-header">
+        <div class="logo">Priyanka K P</div>
+        <nav>
+            <ul>
+                <li><a href="#summary">Summary</a></li>
+                <li><a href="#expertise">Expertise</a></li>
+                <li><a href="#work-showcase">Work</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <h1>Social Growth Strategist</h1>
+            <p>Empowering Brands with Strategic Social Media & Digital Innovation</p>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <section class="content-section summary-section" id="summary">
+            <h2>Meet Priyanka</h2>
+            <div class="section-content">
+                <p>I’m Priyanka – a creative strategist passionate about building brands that don’t just exist online
+                    but truly connect and convert.</p>
+
+                <p>With a strong foundation in social media management, content planning, and branding, I blend
+                    creativity with data to craft stories that resonate. From trend-savvy content creation to deep-dive
+                    research, I ensure every piece of content has a purpose — and every strategy delivers impact.</p>
+
+                <p>I also bring hands-on experience in paid ad campaigns, having successfully managed and optimized
+                    campaigns to drive impressive ROI across platforms. Whether it's boosting brand awareness or fueling
+                    conversions, I know how to make every rupee count.</p>
+            </div>
+
+        </section>
+
+        <section class="content-section expertise-section" id="expertise">
+            <h2>CORE EXPERTISE</h2>
+            <div class="expertise-grid">
+                <div class="expertise-grid-item">
+                    <img src="images/two.png" alt="Digital Strategy" />
+                    <span>Digital Strategy</span>
+                </div>
+                <div class="expertise-grid-item">
+                    <img src="images/leadership.jpg" alt="Content Leadership" />
+                    <span>Content Leadership</span>
+                </div>
+                <div class="expertise-grid-item">
+                    <img src="images/four.jpg" alt="Performance Marketing" />
+                    <span>Performance Marketing</span>
+                </div>
+                <div class="expertise-grid-item">
+                    <img src="images/socialmedia.jpg" alt="SEO" />
+                    <span>Social Media</span>
+                </div>
+                <div class="expertise-grid-item">
+                    <img src="images/one.png" alt="Brand Awareness" />
+                    <span>Market Analysis/Reasearch</span>Brand Awareness
+                </div>
+                <div class="expertise-grid-item">
+                    <img src="images/6.jpg" alt="Market Analysis" />
+                    <span>Brand Awareness</span>
+                </div>
+                <div class="expertise-grid-item">
+                    <img src="images/da.jpg" alt="Data Analytics" />
+                    <span>Digital Campaign Management</span>
+                </div>
+                <div class="expertise-grid-item">
+                    <img src="images/ce.jpg" alt="Customer Experience" />
+                    <span>Customer Experience</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="work">
+            <h2>MY WORK</h2>
+
+            <div class="featured-image-row">
+                <div class="featured-card">
+                    <div class="featured-image" style="background-image: url('assets/logos/l2.png');"></div>
+                </div>
+                <div class="featured-card center">
+                    <div class="featured-image"
+                        style="background-image: url('assets/Social media post/Engagement/Engagement1.jpg');"></div>
+                </div>
+                <div class="featured-card">
+                    <div class="featured-image"
+                        style="background-image: url('assets/Social media post/Event/event1.jpg');"></div>
+                </div>
+            </div>
+
+            <p class="featured-subtitle">
+                From crafting compelling brand stories to designing scroll-stopping visuals, I bring strategy and
+                creativity together to help brands grow online. Here’s a look at some of my recent social media work
+                that drove engagement, reach, and results.
+            </p>
+
+            <div style="text-align: center;">
+                <a href="images.html" class="view-work-button">View Work</a>
+            </div>
+        </section>
+
+
+        <section class="content-section skills-section" id="skills">
+            <h2>SKILLS & TOOLS</h2>
+            <div class="skills-grid">
+                <div class="skill-item"><i class="fas fa-paint-brush"></i> <span>Canva</span></div>
+                <div class="skill-item"><i class="fab fa-wordpress"></i> <span>WordPress</span></div>
+                <div class="skill-item"><i class="fab fa-facebook"></i> <span>Meta Ads</span></div>
+                <div class="skill-item"><i class="fab fa-google"></i> <span>Google Ads</span></div>
+            </div>
+        </section>
+
+
+        <section class="content-section experience-section" id="experience">
+            <h2>PROFESSIONAL EXPERIENCE</h2>
+
+            <div class="card">
+                <h3>KOIOS STUDIO AND ENGINEERING</h3>
+                <p class="job-title"><strong>Social Media Manager</strong> | Nov 2024 – Present (Remote)</p>
+
+                <ul>
+                    <li><strong>Leadership Etiquettes:</strong> Nurtured a culture of accountability and excellence by
+                        strategic task delegation, progress monitoring, and team motivation, driving consistent
+                        achievement of ambitious goals and exceptional results.</li>
+
+                    <li><strong>Digital Marketing Strategist:</strong> Developed a paid acquisition strategy across
+                        Google, Facebook, and industry newsletters, generating high-quality leads that translated to ₹15
+                        Lakhs in revenue within a 1-year campaign period, yielding a consistent flow of 2,000 leads.
+                    </li>
+
+                    <li><strong>Marketing Roadmap:</strong> Adept in developing and implementing short/long-term
+                        marketing strategies including annual plans, defining media mix across platforms, and boosting
+                        organic reach by 50%.</li>
+
+                    <li><strong>Marketing Campaign:</strong> Designed a holistic Women's Day “THANKHER” campaign
+                        centered on villa ownership, orchestrated from ideation to execution, using YouTube Ads to drive
+                        project interest and visibility.</li>
+
+                    <li><strong>Content Mastery:</strong> Passionate storyteller; proactively shaped and pitched
+                        compelling, strategically relevant creative content ideas to enhance engagement across local
+                        digital channels.</li>
+
+                    <li><strong>ROI Accountability:</strong> Ideated and executed an incremental ROI strategy that
+                        increased returns by 5x through effective planning and optimization.</li>
+
+                    <li><strong>Social Media Marketing:</strong> Leveraged digital and social media platforms to drive
+                        brand visibility and connect with target audiences, increasing overall brand awareness.</li>
+
+                    <li><strong>Content Specialist:</strong> Crafted innovative content tailored to first-time
+                        homebuyers and luxury property investors, using blog posts and virtual tours to captivate
+                        audiences.</li>
+
+                    <li><strong>Content Planning & Distribution:</strong>
+                        <ul>
+                            <li>Created and executed monthly content calendars aligned with client goals, campaigns, and
+                                trends.</li>
+                            <li>Ensured a mix of educational, promotional, and engagement-driven content.</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>High-Quality, Platform-Optimized Content:</strong>
+                        <ul>
+                            <li>Produced platform-specific content (Instagram carousels, LinkedIn thought-leadership,
+                                reels).</li>
+                            <li>Used analytics to schedule and format content for maximum interaction.</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>Cross-Platform SEO & Distribution:</strong>
+                        <ul>
+                            <li>Supported off-page SEO with strategic content sharing across social groups, PR, and
+                                niche platforms.</li>
+                            <li>Improved domain authority and discoverability through backlinks and mentions.</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>Content Ideation for Instagram & LinkedIn:</strong> Generated fresh ideas for reels,
+                        stories, polls, infographics, and carousels tailored to platform audiences.</li>
+
+                    <li><strong>Influencer Marketing:</strong>
+                        <ul>
+                            <li>Executed nano-influencer campaigns: outreach, negotiation, collaboration, and results
+                                tracking.</li>
+                            <li>Ensured brand alignment and impactful delivery.</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>Consistent Engagement:</strong>
+                        <ul>
+                            <li>Maintained regular posting across Instagram, LinkedIn, and YouTube.</li>
+                            <li>On Instagram: Used Reels, Carousels, Stories, and DMs for audience interaction.</li>
+                            <li>On LinkedIn: Shared thought leadership, behind-the-scenes, client stories, and engaged
+                                in B2B conversations.</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>Client Management & Coordination:</strong>
+                        <ul>
+                            <li>Acted as main point of contact between clients and internal teams.</li>
+                            <li>Managed onboarding, strategy, reporting, and performance reviews.</li>
+                            <li>Led client meetings, translated needs into deliverables, and ensured on-time project
+                                execution.</li>
+                            <li>Coordinated with creators, designers, developers, and ad specialists.</li>
+                            <li>Maintained documentation, timelines, and communication logs.</li>
+                            <li>Handled multiple clients with task prioritization and consistent quality.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="card">
+                <h3>DHAMMANAGI ZEUS FREELANCE</h3>
+                <p class="job-title"><strong>Freelancer</strong> | Jan 2024 – May 2024</p>
+
+                <ul>
+                    <li><strong>Social Media Marketing:</strong> Ability to leverage digital and social media platforms
+                        to drive brand visibility, engage with the target audience, increasing the branding awareness.
+                    </li>
+
+                    <li><strong>Content Specialist:</strong> Crafted innovative content initiatives tailored to
+                        first-time homebuyers and luxury property investors within the housing industry, leveraging
+                        diverse formats such as blog posts and virtual tours to captivate audiences.</li>
+                </ul>
+            </div>
+
+
+            <div class="card">
+                <h3>Own My Home</h3>
+                <p class="job-title"><strong>Team Lead</strong> | May 2018 – 2021</p>
+                <ul>
+                    <li><strong>Generated 30% more leads</strong> via campaign optimization.</li>
+                    <li><strong>Handled digital budget of ₹10 Lakhs annually.</strong></li>
+
+                    <li><strong>Leadership Etiquettes:</strong> Nurtured a culture of accountability and excellence by
+                        strategic task delegation, progress monitoring, and team motivation, driving consistent
+                        achievement of ambitious goals and exceptional results.</li>
+
+                    <li><strong>Digital Marketing Strategist:</strong> Developed a paid acquisition strategy across
+                        Google, Facebook, and industry newsletters, generating high-quality leads that translated to ₹15
+                        Lakhs in revenue within a 1-year campaign management period yielding a consistent flow of 2,000
+                        leads.</li>
+
+                    <li><strong>Marketing Roadmap:</strong> Adept in developing & implementing short/long-term marketing
+                        strategies including annual marketing plans, defining the media mix across social media, digital
+                        promotion & optimal utilization of media vehicles to boost organic reach by 50%.</li>
+
+                    <li><strong>Marketing Campaign:</strong> Designed a holistic Women's Day “THANKHER” campaign
+                        centered on villa ownership, orchestrating all aspects from ideation to execution, utilizing
+                        YouTube Ads to amplify project interest, showcasing an extraordinary creativity and increased
+                        visibility.</li>
+
+                    <li><strong>Content Mastery:</strong> A passionate storytelling, and proactively shape & pitch
+                        compelling strategically relevant creative content ideas to update content in local digital
+                        channels & increase social media engagement.</li>
+
+                    <li><strong>ROI Accountability:</strong> Responsible for ideating & executing an incremental ROI
+                        strategy to ensure the marketing department maintains, improves & increases the ROI by 5x more.
+                    </li>
+                </ul>
+            </div>
+
+        </section>
+
+        <section class="content-section education-section" id="education">
+            <h2>EDUCATION & CERTIFICATIONS</h2>
+            <ul>
+                <li><strong>Master In Business Administration (MBA)</strong>, Jain University (Online), 2022–2024</li>
+                <li><strong>Bachelor Of Commerce (B.Com)</strong>, Christ University, 2011</li>
+                <li><strong>Digital Marketing</strong>, Streamline Academy, 2019</li>
+            </ul>
+        </section>
+
+        <section class="content-section highlights-section">
+            <h2>HIGHLIGHTS & STRENGTHS</h2>
+            <ul class="highlights-list">
+                <li class="highlight-item"><i class="fas fa-brain"></i> <strong>Strategic Planner with Vision:</strong>
+                    Developing steps to achieve "Big Picture" results.</li>
+                <li class="highlight-item"><i class="fas fa-lightbulb"></i> <strong>Creative & Data-Driven
+                        Thinker:</strong> Blending innovation with analytical insights.</li>
+                <li class="highlight-item"><i class="fas fa-handshake"></i> <strong>Collaborator & Avid
+                        Communicator:</strong> Fostering strong team and client relationships.</li>
+                <li class="highlight-item"><i class="fas fa-users-cog"></i> <strong>Strong Stakeholder
+                        Engagement:</strong> Building and maintaining effective relationships.</li>
+                <li class="highlight-item"><i class="fas fa-puzzle-piece"></i> <strong>Problem Solver:</strong> Adept at
+                    identifying and resolving complex challenges.</li>
+                <li class="highlight-item"><i class="fas fa-chart-line"></i> <strong>Performance-Oriented &
+                        Results-Driven:</strong> Consistently achieving and exceeding targets.</li>
+                <li class="highlight-item"><i class="fas fa-desktop"></i> <strong>Digital-First Mindset:</strong>
+                    Leveraging technology for maximum impact.</li>
+                <li class="highlight-item"><i class="fas fa-star"></i> <strong>Resilient:</strong> Thriving in dynamic
+                    environments and overcoming challenges.</li>
+                <li class="highlight-item"><i class="fas fa-book-reader"></i> <strong>Adaptability & Continuous
+                        Learning:</strong> Committed to staying current with industry trends and technologies.</li>
+            </ul>
+        </section>
+
+        <section class="content-section contact-section" id="contact">
+            <div class="contact-info">
+                <h2>GET IN TOUCH</h2>
+                <p>I'm always open to new opportunities and collaborations. Feel free to reach out!</p>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:pri.dhruvravi@gmail.com
+                            ">pri.dhruvravi@gmail.com
+                        </a></li>
+                    <li><i class="fas fa-phone"></i> <a href="tel:+91 9980080747">+91 9980080747</a></li>
+                    <li><i class="fas fa-map-marker-alt"></i> Bengaluru, Karnataka, India</li>
+                    <li><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/priyankakp
+                    " target="_blank">www.linkedin.com/in/priyankakp
+                        </a></li>
+                </ul>
+            </div>
+            <div class="contact-form">
+                <h2>SEND A MESSAGE</h2>
+                <form>
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject">
+
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Priyanka K P. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

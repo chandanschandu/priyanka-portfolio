@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio - Advanced Showcase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Base styles */
+        body {
+            position: relative;
+            overflow-x: hidden;
+            background-color: #0a0a0a;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            padding: 0.5rem;
+            margin: 0;
+        }
+
+        /* Background animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at top left, rgba(29, 78, 216, 0.15) 0%, transparent 30%),
+                radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.15) 0%, transparent 30%);
+            background-size: 200% 200%;
+            animation: moveBackground 20s infinite alternate linear;
+            z-index: -1;
+            opacity: 0.8;
+        }
+
+        @keyframes moveBackground {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        /* Transitions */
+        .content-transition-exit-active {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .content-transition-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s ease-in, transform 0.5s ease-in;
+        }
+
+        /* Gallery styles */
+         /* Updated gallery styles to ensure full image display without cutting */
+    .gallery-container {
+        position: relative;
+        width: 100%;
+        height: auto;
+        min-height: 300px;
+        background-color: #374151;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .gallery-track {
+        display: flex;
+        flex: 1;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+    }
+
+    .gallery-item {
+        flex: 0 0 100%;
+        scroll-snap-align: center;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        min-height: 300px;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+    .gallery-media {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        border-radius: 0.5rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .gallery-item-tall {
+    overflow-y: auto;
+    align-items: flex-start;
+}
+
+    /* Responsive adjustments */
+    @media (min-width: 640px) {
+        .gallery-item {
+            min-height: 400px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .gallery-item {
+            min-height: 500px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .gallery-container {
+            max-height: 70vh;
+        }
+        .gallery-item {
+            min-height: 600px;
+        }
+    }
+
+        /* Video specific styles */
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .video-thumbnail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .video-play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            cursor: pointer;
+        }
+        
+        .video-play-button i {
+            color: white;
+            font-size: 20px;
+            margin-left: 3px;
+        }
+
+    /* Modal styles */
+       .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    
+    .modal.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-media-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-media {
+        max-width: 95vw;
+        max-height: 95vh;
+        object-fit: contain;
+        border-radius: 0.5rem;
+        display: block;
+        margin: auto;
+    }
+
+
+
+
+    /* Modal controls positioning */
+    .modal-close-btn, .modal-nav-btn, .modal-resize-btn {
+        position: fixed;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 1010;
+        border: none;
+        outline: none;
+    }
+
+    .modal-close-btn {
+        top: 20px;
+        right: 20px;
+    }
+
+    .modal-nav-btn.prev {
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .modal-nav-btn.next {
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+        /* Controls */
+        .gallery-controls {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 1rem;
+            pointer-events: none;
+        }
+        
+        .gallery-controls button {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border-radius: 9999px;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+        }
+
+        .modal-close-btn, .modal-nav-btn, .modal-resize-btn {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1010;
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 640px) {
+            .gallery-item {
+                min-height: 400px;
+            }
+            .video-play-button {
+                width: 60px;
+                height: 60px;
+            }
+            .video-play-button i {
+                font-size: 24px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .gallery-item {
+                min-height: 500px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .gallery-item {
+                min-height: 600px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-black min-h-screen flex flex-col items-center justify-center py-4 sm:py-8 px-4 font-poppins">
+
+    <div class="w-full max-w-4xl lg:max-w-5xl bg-gray-800 rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-4 sm:p-6 md:p-8 border border-gray-700 relative z-10">
+
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white text-center mb-3">Work Showcase</h1>
+        <div class="text-center mb-4">
+            <a href="index.html" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full transition-colors duration-300">
+                <i class="fas fa-home mr-2"></i> Back to Home
+            </a>
+        </div>
+        
+        <p class="text-center text-gray-400 text-base sm:text-lg mb-6">Explore our latest designs and creative work</p>
+        
+        <nav class="flex justify-center flex-wrap gap-2 sm:gap-4 mb-6 sm:mb-8 border-b pb-4 sm:pb-6 border-gray-700">
+            <button data-category="social-media" class="category-btn px-4 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base font-semibold text-white bg-gray-700 hover:bg-gray-600 transition-all duration-300 shadow-md">Social Media</button>
+            <button data-category="carousel" class="category-btn px-4 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base font-semibold text-gray-300 bg-gray-900 hover:bg-gray-800 transition-all duration-300">Carousels</button>
+            <button data-category="banner" class="category-btn px-4 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base font-semibold text-gray-300 bg-gray-900 hover:bg-gray-800 transition-all duration-300">Banners</button>
+            <button data-category="brochure" class="category-btn px-4 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base font-semibold text-gray-300 bg-gray-900 hover:bg-gray-800 transition-all duration-300">Brochures</button>
+            <button data-category="reels-videos" class="category-btn px-4 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base font-semibold text-gray-300 bg-gray-900 hover:bg-gray-800 transition-all duration-300">Reels/Videos</button>
+            <button data-category="logos" class="category-btn px-4 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base font-semibold text-gray-300 bg-gray-900 hover:bg-gray-800 transition-all duration-300">Logos</button>
+        </nav>
+
+        <div id="content-area" class="relative min-h-[300px] sm:min-h-[400px] flex items-center justify-center p-4 sm:p-6 bg-gray-900 rounded-xl sm:rounded-2xl border border-gray-700 shadow-inner overflow-hidden text-white">
+            <div class="text-center text-gray-400 animate-pulse">
+                <p class="text-xl sm:text-2xl font-semibold">Select a category to explore our work.</p>
+                <svg class="mx-auto mt-4 w-10 h-10 sm:w-12 sm:h-12 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="media-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-media-container">
+                <div id="modal-media"></div>
+            </div>
+            <button id="modal-close-btn" class="modal-close-btn" style="top: 15px; right: 15px;"><i class="fas fa-times"></i></button>
+            <button id="modal-prev-btn" class="modal-nav-btn prev" style="left: 15px;"><i class="fas fa-chevron-left"></i></button>
+            <button id="modal-next-btn" class="modal-nav-btn next" style="right: 15px;"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <script>
+        const contentArea = document.getElementById('content-area');
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const mediaModal = document.getElementById('media-modal');
+        const modalMedia = document.getElementById('modal-media');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const modalPrevBtn = document.getElementById('modal-prev-btn');
+        const modalNextBtn = document.getElementById('modal-next-btn');
+
+        // Portfolio data with videos
+        const portfolioData = {
+            'social-media': {
+                title: 'Social Media Posts',
+                index: [
+                    { name: 'Festive', key: 'festive', icon: 'fa-gift', images: [
+                        'assets/Social media post/Festive/shankranti.jpg',
+                        'assets/Social media post/Festive/childrens.jpg',
+                        'assets/Social media post/Festive/friendship.jpg',
+                    ]},
+                    { name: 'Informative / Educative (UI/UX)', key: 'informative', icon: 'fa-lightbulb', images: [
+                        'assets/Social media post/informative/info1.jpg',
+                        'assets/Social media post/informative/ui1.jpg',
+                        'assets/Social media post/informative/ui2.jpg',
+                    ]},
+                    { name: 'Event', key: 'event', icon: 'fa-calendar-alt', images: [
+                        'assets/Social media post/Event/event1.jpg',
+                        'assets/Social media post/Event/event2.jpg',
+                        'assets/Social media post/Event/event3.jpg',
+                        'assets/Social media post/Event/event4.jpg',
+                        'assets/Social media post/Event/event5.jpg',
+                        'assets/Social media post/Event/event6.jpg',
+                    ]},
+                    { name: 'Meme', key: 'meme', icon: 'fa-face-laugh-squint', images: [
+                        'assets/Social media post/Meme/meme1.jpg',
+                        'assets/Social media post/Meme/meme2.jpg',
+                    ]},
+                    { name: 'Engagement', key: 'engagement', icon: 'fa-users', images: [
+                        'assets/Social media post/Engagement/Engagement1.jpg',
+                        'assets/Social media post/Engagement/Engagement2.jpg',
+                        'assets/Social media post/Engagement/Engagement3.jpg',
+                    ]},
+                    { name: 'Promo', key: 'promo', icon: 'fa-soap', images: [
+                        'assets/Social media post/Promo/promo1.jpg',
+                        'assets/Social media post/Promo/promo2.jpg',
+                        'assets/Social media post/Promo/promo3.jpg',
+                        'assets/Social media post/Promo/promo4.jpg',
+                    ]}
+                ]
+            },
+            'carousel': {
+                title: 'Carousels',
+                index: [
+                    { name: 'Case Study', key: 'case-study', icon: 'fa-book-open', images: [
+                        'assets/carousels/case sudy/casestudy1.jpg',
+                        'assets/carousels/case sudy/cs2.jpg',
+                        'assets/carousels/case sudy/cs3.jpg', 
+                        'assets/carousels/case sudy/cs4.jpg', 
+                        'assets/carousels/case sudy/cs5.jpg', 
+                        'assets/carousels/case sudy/cs6.jpg', 
+                        'assets/carousels/case sudy/cs7.jpg', 
+                        'assets/carousels/case sudy/cs8.jpg', 
+                        'assets/carousels/case sudy/cs9.jpg', 
+                        'assets/carousels/case sudy/cs10.jpg', 
+                    ]},
+                    { name: 'Festive', key: 'festive-carousel', icon: 'fa-star', images: [
+                        'assets/carousels/festiv/valentinsday/vd1.jpg',
+                        'assets/carousels/festiv/valentinsday/vd2.jpg',
+                        'assets/carousels/festiv/valentinsday/vd3.jpg',
+                        'assets/carousels/festiv/valentinsday/vd4.jpg',
+                        'assets/carousels/festiv/valentinsday/vd5.jpg',
+                        'assets/carousels/festiv/valentinsday/vd6.jpg',
+                        'assets/carousels/festiv/valentinsday/vd7.jpg',
+                        'assets/carousels/festiv/pizaday/p1.jpg',
+                        'assets/carousels/festiv/pizaday/pd1.jpg',
+                        'assets/carousels/festiv/pizaday/pd3.jpg',
+                        'assets/carousels/festiv/pizaday/pd4.jpg',
+                        'assets/carousels/festiv/pizaday/pd5.jpg',
+                        'assets/carousels/festiv/pizaday/pd6.jpg',
+                        'assets/carousels/festiv/pizaday/pd7.jpg',
+                    ]},
+                    { name: 'Promo (Why Koios Studio)', key: 'promo-koios', icon: 'fa-bullhorn', images: [
+                        'assets/carousels/festiv/promo/p1.jpg',
+                        'assets/carousels/festiv/promo/p2.jpg',
+                        'assets/carousels/festiv/promo/p3.jpg',
+                        'assets/carousels/festiv/promo/p4.jpg',
+                        'assets/carousels/festiv/promo/p5.jpg',
+                        'assets/carousels/festiv/promo/p6.jpg',
+                        'assets/carousels/festiv/promo/p7.jpg',
+                    ]},
+                    { name: 'Spiritual (Ganesha)', key: 'spiritual-ganesha', icon: 'fa-om', images: [
+                        'assets/carousels/festiv/spiritual/s1.jpg', 
+                        'assets/carousels/festiv/spiritual/s2.jpg', 
+                        'assets/carousels/festiv/spiritual/s3.jpg', 
+                        'assets/carousels/festiv/spiritual/s4.jpg', 
+                        'assets/carousels/festiv/spiritual/s5.jpg', 
+                        'assets/carousels/festiv/spiritual/s6.jpg', 
+                        'assets/carousels/festiv/spiritual/s7.jpg', 
+                    ]}
+                ]
+            },
+            'banner': {
+                title: 'Banners',
+                images: [
+                    'assets/banners/b1.jpg',
+                    'assets/banners/b2.jpg',
+                    'assets/banners/b3.jpg',
+                    'assets/banners/b4.jpg',
+                    'assets/banners/b5.jpg',
+                    'assets/banners/b6.jpg',
+                    'assets/banners/b7.jpg',
+                    'assets/banners/b8.jpg',
+                    'assets/banners/b9.jpg',
+                    'assets/banners/b10.jpg',
+                ]
+            },
+            'brochure': {
+                title: 'Brochures',
+                images: [
+                    'assets/Brochure/b1.jpg',
+                    'assets/Brochure/b2.jpg',
+                    'assets/Brochure/b3.jpg',
+                    'assets/Brochure/b4.jpg',
+                ]
+            },
+            'reels-videos': {
+                title: 'Reels/Videos',
+                videos: [
+                    {
+                        src: 'assets/videos/video1.mp4',
+                        thumbnail: 'assets/videos/one.jpg',
+                       
+                    },
+                    {
+                        src: 'assets/videos/video2.mp4',
+                        thumbnail: 'assets/videos/two.jpg',
+                    
+                    },
+                    {
+                        src: 'assets/videos/video3.mp4',
+                        thumbnail: 'assets/videos/thre.jpg',
+                       
+                    },
+                    {
+                        src: 'assets/videos/video4.mp4',
+                        thumbnail: 'assets/videos/four.jpg',
+                      
+                    }
+                ]
+            },
+            'logos': {
+                title: 'Logos',
+                images: [
+                    'assets/logos/l1.jpg',
+                    'assets/logos/l2.png',
+                    'assets/logos/logo2.jpg',
+                ]
+            }
+        };
+
+        let currentCategory = null;
+        let currentMedia = [];
+        let currentMediaIndex = 0;
+        let currentVideoElement = null;
+
+        // Render content with animation
+        const renderContent = (htmlContent, fadeIn = true) => {
+            if (fadeIn) {
+                contentArea.classList.add('content-transition-exit-active');
+                setTimeout(() => {
+                    contentArea.innerHTML = htmlContent;
+                    contentArea.classList.remove('content-transition-exit-active');
+                    contentArea.classList.add('content-transition-enter-active');
+                    setTimeout(() => {
+                        contentArea.classList.remove('content-transition-enter-active');
+                        if (contentArea.querySelector('#gallery-track')) {
+                            attachGalleryListeners();
+                        }
+                        if (contentArea.querySelector('.sub-category-btn')) {
+                            attachSubCategoryListeners();
+                        }
+                        const backBtn = document.getElementById('back-to-index-btn');
+                        if (backBtn) {
+                            backBtn.addEventListener('click', () => showIndex(currentCategory));
+                        }
+                    }, 500);
+                }, 500);
+            } else {
+                contentArea.innerHTML = htmlContent;
+                if (contentArea.querySelector('#gallery-track')) {
+                    attachGalleryListeners();
+                }
+                if (contentArea.querySelector('.sub-category-btn')) {
+                    attachSubCategoryListeners();
+                }
+                const backBtn = document.getElementById('back-to-index-btn');
+                if (backBtn) {
+                    backBtn.addEventListener('click', () => showIndex(currentCategory));
+                }
+            }
+        };
+
+        // Show category index
+        const showIndex = (categoryKey) => {
+            currentCategory = categoryKey;
+            const categoryData = portfolioData[categoryKey];
+            let indexHtml = `
+                <div class="w-full text-center">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-6 sm:mb-8">${categoryData.title}</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            `;
+
+            if (categoryData.index) {
+                categoryData.index.forEach(item => {
+                    indexHtml += `
+                        <button data-sub-category="${item.key}" class="sub-category-btn flex flex-col items-center justify-center p-4 sm:p-6 bg-gray-700 rounded-xl hover:bg-gray-600 transition-all duration-300 transform border border-gray-600 text-white">
+                            <i class="fas ${item.icon} text-3xl sm:text-4xl mb-3 text-blue-400"></i>
+                            <span class="text-xl sm:text-2xl font-bold mb-2">${item.name}</span>
+                            <span class="text-gray-300 text-sm">(${item.images.length} works)</span>
+                        </button>
+                    `;
+                });
+            } else if (categoryData.videos || categoryData.images) {
+                const mediaCount = categoryData.videos ? categoryData.videos.length : categoryData.images.length;
+                indexHtml += `
+                    <button data-sub-category="all" class="sub-category-btn col-span-full flex flex-col items-center justify-center p-6 bg-gray-700 rounded-xl hover:bg-gray-600 transition-all duration-300 transform border border-gray-600 text-white">
+                        <i class="fas ${categoryData.videos ? 'fa-video' : 'fa-images'} text-4xl mb-3 text-blue-400"></i>
+                        <span class="text-2xl font-bold mb-2">View All ${categoryData.title}</span>
+                        <span class="text-gray-300 text-sm">(${mediaCount} works)</span>
+                    </button>
+                `;
+            } else {
+                indexHtml += `<p class="text-lg sm:text-xl text-gray-400 col-span-full">Content coming soon for ${categoryData.title}!</p>`;
+            }
+
+            indexHtml += `
+                    </div>
+                </div>
+            `;
+            renderContent(indexHtml);
+        };
+
+        // Show media for selected category
+        const showMedia = (categoryKey, subCategoryKey) => {
+            const categoryData = portfolioData[categoryKey];
+            let media = [];
+            let currentTitle = '';
+
+            if (categoryData.index) {
+                const subCategory = categoryData.index.find(item => item.key === subCategoryKey);
+                if (subCategory) {
+                    media = subCategory.images;
+                    currentTitle = `${categoryData.title} - ${subCategory.name}`;
+                }
+            } else if (categoryData.videos) {
+                media = categoryData.videos;
+                currentTitle = categoryData.title;
+            } else if (categoryData.images) {
+                media = categoryData.images;
+                currentTitle = categoryData.title;
+            }
+            currentMedia = media;
+
+            if (media.length === 0) {
+                renderContent(`
+                    <div class="text-center text-gray-400">
+                        <h2 class="text-2xl font-bold mb-4">No content found.</h2>
+                        <button id="back-to-index-btn" class="mt-6 px-6 py-3 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-300">
+                            Back to Index
+                        </button>
+                    </div>
+                `);
+                return;
+            }
+
+            let galleryHtml = `
+                <div class="w-full text-center">
+                    <button id="back-to-index-btn" class="inline-flex items-center text-blue-400 hover:text-blue-200 transition-colors duration-300 mb-4 sm:mb-6">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                        Back to ${categoryData.index ? 'Sub-Categories' : 'All Work'}
+                    </button>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-6 sm:mb-8">${currentTitle}</h2>
+
+                    <div class="gallery-container">
+                        <div id="gallery-track" class="gallery-track">
+                            ${media.map((item, index) => {
+                                const isVideo = typeof item === 'object' && item.src;
+                                const src = isVideo ? item.src : item;
+                                const thumbnail = isVideo ? item.thumbnail : '';
+                                const title = isVideo ? item.title : '';
+                                
+                                return `
+                                <div class="gallery-item" data-index="${index}">
+                                    ${isVideo ? `
+                                    <div class="video-container">
+                                        ${thumbnail ? `<img src="${thumbnail}" class="video-thumbnail gallery-media" alt="${title}">` : ''}
+                                        <div class="video-play-button">
+                                            <i class="fas fa-play"></i>
+                                        </div>
+                                    </div>
+                                    ${title ? `<div class="text-white mt-2 font-medium">${title}</div>` : ''}
+                                    ` : `
+                                    <img src="${src}" alt="Work Image ${index + 1}" class="gallery-media">
+                                    `}
+                                </div>
+                                `;
+                            }).join('')}
+                        </div>
+                        <div class="gallery-controls">
+                            <button id="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                            <button id="next-btn"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            renderContent(galleryHtml);
+        };
+
+        // Attach category button listeners
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                categoryButtons.forEach(btn => {
+                    btn.classList.remove('bg-gray-700', 'text-white', 'shadow-md');
+                    btn.classList.add('bg-gray-900', 'text-gray-300');
+                });
+                button.classList.add('bg-gray-700', 'text-white', 'shadow-md');
+                button.classList.remove('bg-gray-900', 'text-gray-300');
+
+                const category = button.dataset.category;
+                if (portfolioData[category].index) {
+                    showIndex(category);
+                } else {
+                    showMedia(category, 'all');
+                }
+            });
+        });
+
+        // Attach sub-category button listeners
+        function attachSubCategoryListeners() {
+            document.querySelectorAll('.sub-category-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const subCategory = button.dataset.subCategory;
+                    showMedia(currentCategory, subCategory);
+                });
+            });
+        }
+
+        // Attach gallery listeners
+        function attachGalleryListeners() {
+            const galleryTrack = document.getElementById('gallery-track');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const galleryItems = galleryTrack.querySelectorAll('.gallery-item');
+            const videoPlayButtons = document.querySelectorAll('.video-play-button');
+
+            if (!galleryTrack || !prevBtn || !nextBtn || galleryItems.length === 0) return;
+
+            let currentIndex = 0;
+            const totalItems = galleryItems.length;
+
+            if (totalItems <= 1) {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+            }
+
+            const scrollToIndex = (index) => {
+                const item = galleryItems[index];
+                if (!item) return;
+
+                const offsetLeft = item.offsetLeft - galleryTrack.offsetLeft;
+                galleryTrack.scrollTo({
+                    left: offsetLeft,
+                    behavior: 'smooth'
+                });
+            };
+
+            prevBtn.onclick = () => {
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalItems - 1;
+                scrollToIndex(currentIndex);
+            };
+
+            nextBtn.onclick = () => {
+                currentIndex = (currentIndex < totalItems - 1) ? currentIndex + 1 : 0;
+                scrollToIndex(currentIndex);
+            };
+
+            galleryTrack.addEventListener('scroll', () => {
+                const scrollLeft = galleryTrack.scrollLeft;
+                let closestIndex = 0;
+                let minDistance = Infinity;
+                galleryItems.forEach((item, index) => {
+                    const itemLeft = item.offsetLeft - galleryTrack.offsetLeft;
+                    const distance = Math.abs(scrollLeft - itemLeft);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestIndex = index;
+                    }
+                });
+                currentIndex = closestIndex;
+            });
+
+            // Handle video play button clicks
+            videoPlayButtons.forEach((button, index) => {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    currentMediaIndex = index;
+                    openMediaModal(currentMedia[currentMediaIndex]);
+                });
+            });
+
+            // Handle gallery item clicks (for images)
+            galleryItems.forEach((item, index) => {
+                const isVideo = item.querySelector('.video-container') !== null;
+                if (!isVideo) {
+                    item.addEventListener('click', () => {
+                        currentMediaIndex = parseInt(item.dataset.index);
+                        openMediaModal(currentMedia[currentMediaIndex]);
+                    });
+                }
+            });
+
+            scrollToIndex(currentIndex);
+        }
+
+        // Modal functions
+         const openMediaModal = (mediaItem) => {
+        const isVideo = typeof mediaItem === 'object' && mediaItem.src;
+        
+        if (isVideo) {
+            if (currentVideoElement) {
+                currentVideoElement.pause();
+            }
+            
+            modalMedia.innerHTML = `
+                <video class="modal-media" controls autoplay>
+                    <source src="${mediaItem.src}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                ${mediaItem.title ? `<div class="text-white text-center mt-2 font-medium">${mediaItem.title}</div>` : ''}
+            `;
+            currentVideoElement = modalMedia.querySelector('video');
+        } else {
+            // Create image and calculate perfect display size
+            const img = new Image();
+            img.onload = function() {
+                const viewportWidth = window.innerWidth * 0.95;
+                const viewportHeight = window.innerHeight * 0.95;
+                let displayWidth = img.naturalWidth;
+                let displayHeight = img.naturalHeight;
+                
+                // Scale down if too large for viewport
+                if (img.naturalWidth > viewportWidth || img.naturalHeight > viewportHeight) {
+                    const widthRatio = viewportWidth / img.naturalWidth;
+                    const heightRatio = viewportHeight / img.naturalHeight;
+                    const scaleRatio = Math.min(widthRatio, heightRatio);
+                    
+                    displayWidth = img.naturalWidth * scaleRatio;
+                    displayHeight = img.naturalHeight * scaleRatio;
+                }
+                
+                modalMedia.innerHTML = '';
+                const displayImg = document.createElement('img');
+                displayImg.src = mediaItem;
+                displayImg.className = 'modal-media';
+                displayImg.style.width = `${displayWidth}px`;
+                displayImg.style.height = `${displayHeight}px`;
+                modalMedia.appendChild(displayImg);
+            };
+            img.src = mediaItem;
+        }
+        
+        mediaModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    };
+
+        const closeMediaModal = () => {
+            if (currentVideoElement) {
+                currentVideoElement.pause();
+                currentVideoElement = null;
+            }
+            mediaModal.classList.remove('show');
+            document.body.style.overflow = '';
+        };
+
+        const navigateModal = (direction) => {
+            if (currentVideoElement) {
+                currentVideoElement.pause();
+                currentVideoElement = null;
+            }
+            
+            currentMediaIndex = (currentMediaIndex + direction + currentMedia.length) % currentMedia.length;
+            openMediaModal(currentMedia[currentMediaIndex]);
+        };
+
+        // Attach modal event listeners
+        modalCloseBtn.addEventListener('click', closeMediaModal);
+        modalPrevBtn.addEventListener('click', () => navigateModal(-1));
+        modalNextBtn.addEventListener('click', () => navigateModal(1));
+        mediaModal.addEventListener('click', (e) => {
+            if (e.target === mediaModal) {
+                closeMediaModal();
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (mediaModal.classList.contains('show')) {
+                if (e.key === 'Escape') {
+                    closeMediaModal();
+                } else if (e.key === 'ArrowLeft') {
+                    navigateModal(-1);
+                } else if (e.key === 'ArrowRight') {
+                    navigateModal(1);
+                }
+            }
+        });
+
+        // Initialize by showing Social Media Posts index by default
+        document.querySelector('.category-btn[data-category="social-media"]').click();
+    </script>
+</body>
+</html>
