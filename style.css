@@ -307,7 +307,72 @@ a:hover {
     margin-left: -1em;
     position: static; /* Reset position for standard bullet */
 }
+/* Specific Adjustments for Summary Section */
 
+/* Styling for the text inside the summary section */
+.summary-text-container p {
+    font-size: 1rem; /* A standard, readable font size */
+    font-weight: 300; /* Lighter font weight for a clean look */
+    line-height: 1.8; /* Generous line height for readability */
+    color: var(--color-text-dark); /* Use a lighter gray for the paragraph text */
+    margin-bottom: var(--spacing-md); /* Add spacing between paragraphs */
+}
+
+/* Optional: If you want to add a title like "About Us" above the text */
+.summary-text-container h3 {
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-accent); /* Use your accent color for the title */
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Ensure any bolded text inside the paragraphs looks good */
+.summary-text-container p strong {
+    color: var(--color-text-light); /* Make bold text stand out more */
+}
+
+.summary-content-wrapper {
+    display: grid;
+    /* Two-column layout: 1fr for the image, 1.5fr for the text */
+    grid-template-columns: 1fr 1.5fr;
+    gap: var(--spacing-xl);
+    align-items: center; /* Vertically center the image and text */
+    padding: 0 var(--spacing-xl); /* Retain the main horizontal padding */
+}
+
+.summary-image-container {
+    padding: var(--spacing-md);
+    border-radius: 8px;
+    background-color: var(--color-card-background); /* Optional: add a background to the image container */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.profile-photo {
+    width: 100%; /* Makes the image fill its container */
+    height: auto;
+    display: block;
+    border-radius: 8px; /* Rounded corners for the image */
+}
+
+/* Remove or modify the following rule as the content is now in a new wrapper */
+.summary-section .section-content {
+    padding: 0; /* The new wrapper now handles the padding */
+}
+
+/* Responsive adjustments for mobile and tablet */
+@media (max-width: 1024px) {
+    .summary-content-wrapper {
+        /* Stack the columns on smaller screens */
+        grid-template-columns: 1fr;
+        padding: 0 var(--spacing-lg);
+    }
+    .summary-image-container {
+        /* Ensure the image container doesn't get too wide on mobile */
+        max-width: 400px;
+        margin: 0 auto; /* Center the image container */
+    }
+}
 
 /* Expertise Grid */
 .expertise-grid {
@@ -622,6 +687,7 @@ a:hover {
   }
 }
 
+
 /* Contact Section (Prominent Styling) - RETAINED A BACKGROUND */
 .contact-section {
     background: var(--color-card-background); /* Background for contact section */
@@ -631,9 +697,13 @@ a:hover {
     margin-bottom: var(--spacing-xxl);
     border: 1px solid var(--color-border);
     display: grid;
-    grid-template-columns: 1fr 1.5fr; /* Two columns for info and form */
+    grid-template-columns: 1fr 1fr; /* Two columns for info and form */
     gap: var(--spacing-xxl);
-    align-items: flex-start;
+    align-items: center;
+}
+.contact-container {
+  max-width: 400px; /* Adjust this value as needed */
+  margin: 0 auto; /* This centers the container on the page */
 }
 
 .contact-info h2, .contact-form h2 {
@@ -1001,5 +1071,4 @@ a:hover {
     .contact-form button {
         font-size: 0.85rem;
     }
-
 }
