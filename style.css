@@ -332,14 +332,14 @@ a:hover {
     color: var(--color-text-light); /* Make bold text stand out more */
 }
 
-/* .summary-content-wrapper {
+.summary-content-wrapper {
     display: grid;
     /* Two-column layout: 1fr for the image, 1.5fr for the text */
     grid-template-columns: 1fr 1.5fr;
     gap: var(--spacing-xl);
     align-items: center; /* Vertically center the image and text */
     padding: 0 var(--spacing-xl); /* Retain the main horizontal padding */
-} */
+}
 
 .summary-image-container {
     padding: var(--spacing-md);
@@ -1072,4 +1072,5 @@ a:hover {
         font-size: 0.85rem;
     }
 }
+
 
